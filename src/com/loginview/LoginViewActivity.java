@@ -17,6 +17,7 @@
 package com.loginview;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
@@ -142,8 +143,11 @@ public class LoginViewActivity extends Activity {
   }
 
   public void loginCallback(View v) {
+    final ProgressDialog dialog = ProgressDialog.show(this, "",
+        "Logging in ...", true);
     ParseUser.logInInBackground(getLoginUserName(), getLoginPwd(), new LogInCallback() {
       public void done(ParseUser user, ParseException e) {
+        dialog.dismiss();
         if (user != null) {
           listener.onSignin("native", user);
         } else {
